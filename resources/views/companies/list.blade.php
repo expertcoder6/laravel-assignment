@@ -55,12 +55,12 @@
                                         }}
                                     </td>
                                     <td>
-                                        <a href='{{ url("/companies") }}/{{ $company->id }}/show' class="btn btn-info">Show</a>
+                                        <a href='{{ url("/companies") }}/{{ $company->id }}/show' class="btn btn-info" style="float:left;">Show</a>
 
                                         @if($role == 1 )
-                                            <a href='{{ url("/companies") }}/{{ $company->id }}/edit' class="btn btn-primary">Edit</a>
+                                            <a href='{{ url("/companies") }}/{{ $company->id }}/edit' class="btn btn-primary" style="float:left; margin: 0 5px;">Edit</a>
 
-                                            <form action="{{ route('companies.destroy', $company->id ) }}" method="post">
+                                            <form action="{{ route('companies.destroy', $company->id ) }}" method="post" style="float:left;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete this user?')">
