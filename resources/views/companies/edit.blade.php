@@ -5,7 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">{{ __('Edit Company') }}</div>
+                <div class="card-header">
+                    {{ __('Edit Company') }}
+                    <a class="btn btn-primary" href='{{ url("/companies") }}' style="float: right;">BACK</a>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,8 +17,6 @@
                         </div>
                     @endif
                     <form action="{{ route('companies.update' , $company->id) }}" method="post" enctype="multipart/form-data">
-
-                    <!-- <form  method="PUT" action="{{ route('companies.update' , $company->id) }}" novalidate enctype="multipart/form-data"> -->
                         @csrf
                         @method('PUT')
 
@@ -45,7 +46,11 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                        </div>
+
+                            <img src="{{url('/images/').'/'.$company->logo}}" alt="Image" width="100" height="100"/>
+                            {{ $company->logo }}
+
+                        </div> 
                         <div class="form-group mb-2">
                             <label>Website</label>
                             <input type="text" class="form-control @error('website') is-invalid @enderror" name="website" id="website" value="{{ $company->website }}">

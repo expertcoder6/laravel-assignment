@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+
+@php
+    $role = Auth::user()->role;
+@endphp
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -8,7 +13,9 @@
                 <div class="card-header">
                     {{ __('All Companies') }}
 
-                    <a href="{{ URL::route('companies.create') }}" class="btn btn-primary" style="float:right;">Add New</a>
+                    @if( $role == 1 )
+                        <a href="{{ URL::route('companies.create') }}" class="btn btn-primary" style="float:right;">Add New</a>
+                    @endif
                 </div>
 
                 <div class="card-body">
@@ -37,7 +44,6 @@
                                     <td> {{ $company->name }} </td>
                                     <td> {{ $company->email }} </td>
                                     <td>
-                                        <!-- {{ $company->logo }} -->
                                         <img src="{{url('/images/').'/'.$company->logo}}" alt="Image" width="100" height="100"/>
                                     </td>
                                     <td>
@@ -49,15 +55,19 @@
                                         }}
                                     </td>
                                     <td>
-                                        <a href='{{ url("/companies") }}/{{ $company->id }}/edit' class="btn btn-primary">Edit</a>
+                                        <a href='{{ url("/companies") }}/{{ $company->id }}/show' class="btn btn-info">Show</a>
 
-                                        <form action="{{ route('companies.destroy', $company->id ) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete this user?')">
-                                                Delete
-                                            </button>
-                                        </form>
+                                        @if($role == 1 )
+                                            <a href='{{ url("/companies") }}/{{ $company->id }}/edit' class="btn btn-primary">Edit</a>
+
+                                            <form action="{{ route('companies.destroy', $company->id ) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete this user?')">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        @endif
 
                                     </td>
                                 </tr>

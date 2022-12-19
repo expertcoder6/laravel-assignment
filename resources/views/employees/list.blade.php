@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+
+@php
+    $role = Auth::user()->role;
+@endphp
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -8,7 +13,9 @@
                 <div class="card-header">
                     {{ __('All Employees') }}
 
-                    <a href="{{ URL::route('employees.create') }}" class="btn btn-primary" style="float:right;">Add New</a>
+                    @if( $role == 1 )
+                        <a href="{{ URL::route('employees.create') }}" class="btn btn-primary" style="float:right;">Add New</a>
+                    @endif
                 </div>
 
                 <div class="card-body">
@@ -52,16 +59,19 @@
                                         }}
                                     </td>
                                     <td>
-                                        <a href='{{ url("/employees") }}/{{ $employee->id }}/edit' class="btn btn-primary">Edit</a>
+                                        <a href='{{ url("/employees") }}/{{ $employee->id }}/show' class="btn btn-info">Show</a>
 
-                                        <form action="{{ route('employees.destroy', $employee->id ) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete this user?')">
-                                                Delete
-                                            </button>
-                                        </form>
+                                        @if( $role == 1 )
+                                            <a href='{{ url("/employees") }}/{{ $employee->id }}/edit' class="btn btn-primary">Edit</a>
 
+                                            <form action="{{ route('employees.destroy', $employee->id ) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete this user?')">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

@@ -5,7 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">{{ __('Edit Employee') }}</div>
+                <div class="card-header">
+                    {{ __('Edit Employee') }}
+                    <a class="btn btn-primary" href='{{ url("/employees") }}' style="float: right;">BACK</a>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -55,7 +58,7 @@
                         </div>
                         <div class="form-group mb-2">
                             <label>Email</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ $employee->last_name }}">
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ $employee->email }}">
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

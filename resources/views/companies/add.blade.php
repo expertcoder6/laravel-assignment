@@ -5,7 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">{{ __('Add Company') }}</div>
+                <div class="card-header">
+                    {{ __('Add Company') }}
+                    <a class="btn btn-primary" href='{{ url("/companies") }}' style="float: right;">BACK</a>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))

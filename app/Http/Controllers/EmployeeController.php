@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 
+use Auth;
+
 class EmployeeController extends Controller
 {
     public function __construct()
@@ -62,7 +64,7 @@ class EmployeeController extends Controller
 
         return Redirect::to('employees');
     }
-
+ 
     /**
      * Display the specified resource.
      *
@@ -71,7 +73,11 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        //
+        //Get the Employee
+        $employee = Employee::find($id);
+        return view('employees.show', [
+            'employee' => $employee
+        ]);
     }
 
     /**
@@ -82,7 +88,7 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        // get the employee
+        //Get the employee
         $employee = Employee::find($id);
 
         //GET all Companies

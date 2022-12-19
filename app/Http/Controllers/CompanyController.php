@@ -83,8 +83,10 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        return view('companies.list', [
-            'companies' => ''
+        // get the company
+        $company = company::find($id);
+        return view('companies.show', [
+            'company' => $company
         ]);
     }
 
@@ -119,13 +121,19 @@ class CompanyController extends Controller
           'name' => 'required'
         ));
 
-        // get the company
+        //Get the company
         $company = company::find($id);
 
         $company->name      = $request->name;
         $company->email     = $request->email;
-        $company->logo      = $request->logo;
         $company->website   = $request->website;
+        
+        if( isset($request->logo) ) {
+            $file     = $request->file('logo');
+            $filename = date('YmdHi').$file->getClientOriginalName();
+            $file->move(public_path('/images'), $filename);
+            $company->logo = $filename;
+        }
 
         $company->save();
 
