@@ -22,5 +22,13 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('companies', CompanyController::class);
-Route::resource('employees', EmployeeController::class);
+//Route::resource('companies', CompanyController::class);
+//Route::resource('employees', EmployeeController::class);
+
+
+Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index')->middleware(['auth','all']); 
+Route::get('companies/create', [CompanyController::class, 'create'])->name('companies.create')->middleware(['auth','admin']);
+Route::post('/companies', [CompanyController::class, 'store'])->name('companies.store')->middleware(['auth','admin']);
+Route::delete('/companies/{company}', [CompanyController::class, 'destroy'])->name('companies.destroy')->middleware(['auth','admin']);
+Route::get('/companies/{company}/edit', [CompanyController::class, 'edit'])->name('companies.edit')->middleware(['auth','admin']);
+Route::put('/companies/{company}', [CompanyController::class, 'update'])->name('companies.update')->middleware(['auth','admin']);
